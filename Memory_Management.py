@@ -2,7 +2,8 @@ import os
 import subprocess
 import pandas as pd
 import matplotlib.pyplot as plt
-from dataclasses import dataclass
+# CORRECTED LINE: Import field along with dataclass
+from dataclasses import dataclass, field 
 from typing import List, Optional, Tuple, Dict
 
 # Detect if the script is running in a headless environment
