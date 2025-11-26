@@ -3,7 +3,7 @@
 ##  Project Overview
 
 This project implements and simulates core algorithms from Operating Systems (OS) and demonstrates their practical relevance by integrating with system-level data from a Linux environment[cite: 3, 4].
-[cite_start]The simulations are written entirely in Python and cover two main focus areas[cite: 11]:
+The simulations are written entirely in Python and cover two main focus areas[cite: 11]:
 * [cite_start]**Process Scheduling:** Simulating different CPU scheduling policies[cite: 6].
 * [cite_start]**Memory Management:** Simulating different memory allocation strategies[cite: 6].
 
