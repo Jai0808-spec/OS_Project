@@ -38,12 +38,6 @@ def simulate_fcfs(processes_data):
         
     print(f"\n* Average Waiting Time: {avg_waiting_time:.2f} ms")
     print(f"* Average Turnaround Time: {avg_turnaround_time:.2f} ms")
-    # 
-
-[Image of FCFS Gantt Chart]
- is not relevant here as the image is about Critical Path Method (CPM).
-    print("[Placeholder: Insert your FCFS Gantt Chart visualization here]")
-
 
 def simulate_sjf(processes_data):
     """Implements the non-preemptive Shortest Job First (SJF) Scheduling Algorithm."""
@@ -109,12 +103,7 @@ def simulate_sjf(processes_data):
         
     print(f"\n* Average Waiting Time: {avg_waiting_time:.2f} ms")
     print(f"* Average Turnaround Time: {avg_turnaround_time:.2f} ms")
-    # 
-
-[Image of SJF Gantt Chart]
- is not relevant here as the image is about trigonometric values.
-    print("[Placeholder: Insert your SJF Gantt Chart visualization here]")
-
+    
 
 def simulate_round_robin(processes_data, quantum=2):
     """Implements the Round Robin Scheduling Algorithm."""
