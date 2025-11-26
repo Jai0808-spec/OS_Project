@@ -72,7 +72,7 @@ Run either simulation file directly using Python 3.
     (Output includes First-Fit, Best-Fit, Worst-Fit, Next-Fit allocation tables and the live `free -h` output.)
 ---
 
-##  Contact and Contributions
+##  Group Members:
 
 * *Jai Lodha*
 * *Gurpreetsingh Sangari*
