@@ -1,5 +1,7 @@
 #  OS Project: Scheduling and Memory Management Simulation
 
+This repository is where processes stop waiting and memory stops wasting. 
+
 ##  Project Overview
 
 This project implements and simulates core algorithms from Operating Systems (OS) and demonstrates their practical relevance by integrating with system-level data from a Linux environment.
