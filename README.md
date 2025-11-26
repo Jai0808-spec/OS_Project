@@ -1,13 +1,11 @@
-# ⚙️ OS Project: Scheduling and Memory Management Simulation
+#  OS Project: Scheduling and Memory Management Simulation
 
-## 🚀 Project Overview
+##  Project Overview
 
-[cite_start]This project implements and simulates core algorithms from Operating Systems (OS) and demonstrates their practical relevance by integrating with system-level data from a Linux environment[cite: 3, 4].
-
+This project implements and simulates core algorithms from Operating Systems (OS) and demonstrates their practical relevance by integrating with system-level data from a Linux environment[cite: 3, 4].
 [cite_start]The simulations are written entirely in Python and cover two main focus areas[cite: 11]:
-
-1.  [cite_start]**Process Scheduling:** Simulating different CPU scheduling policies[cite: 6].
-2.  [cite_start]**Memory Management:** Simulating different memory allocation strategies[cite: 6].
+* [cite_start]**Process Scheduling:** Simulating different CPU scheduling policies[cite: 6].
+* [cite_start]**Memory Management:** Simulating different memory allocation strategies[cite: 6].
 
 ### Learning Objectives
 
@@ -30,7 +28,7 @@
 | **Priority Scheduling** | Preemptive/Non-Preemptive | The process with the highest priority level is executed first. |
 
 **Linux Integration:**
-[cite_start]The script executes the `ps aux` command via the `subprocess` module to fetch a real-time snapshot of active processes on the host machine[cite: 18]. [cite_start]The simulated performance metrics (e.g., Average Waiting Time) are then compared against the **actual CPU scheduling complexity** of the Linux kernel[cite: 19].
+[cite_start]The script executes the `ps aux` command via the `subprocess` module to fetch a real-time snapshot of active processes on the host machine[cite: 18]. [cite_start]The simulated performance metrics (e.g., Average Waiting Time) are then compared against the actual CPU scheduling complexity of the Linux kernel[cite: 19].
 
 ### 2. Memory Management Module (`Memory_Management.py`)
 
@@ -44,7 +42,7 @@
 | **Next-Fit** | Dynamic Partition | A variation of First-Fit that starts searching for the next suitable block from where the last search ended. |
 
 **Linux Integration:**
-[cite_start]The script executes the `free -h` command to display the host machine's memory usage (Total, Used, Free)[cite: 18]. [cite_start]This is used to compare theoretical fragmentation calculations with the kernel's **real-time memory management** (including buffers and cache)[cite: 19].
+[cite_start]The script executes the `free -h` command to display the host machine's memory usage (Total, Used, Free)[cite: 18]. [cite_start]This is used to compare theoretical fragmentation calculations with the kernel's real-time memory management (including buffers and cache)[cite: 19].
 
 ---
 
@@ -52,44 +50,27 @@
 
 ### Prerequisites
 
-* A Linux environment (Ubuntu, Debian, WSL, etc.)
-* Python 3.x installed
+* A **Linux environment** (Ubuntu, Debian, WSL, etc.)
+* **Python 3.x** installed
 
-### Installation
-
-No special libraries are required beyond Python's built-in modules (`subprocess`, `shlex`, `copy`, `collections`) used for the algorithms and Linux integration.
-
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/your_username/OS_Project.git](https://github.com/your_username/OS_Project.git)
-    cd OS_Project
-    ```
 
 ### Usage
 
 Run either simulation file directly using Python 3.
 
-1.  **Run Process Scheduling Simulation:**
+* **Run Process Scheduling Simulation:**
     ```bash
     python3 Process_Scheduling.py
     ```
-    *(Output includes FCFS, SJF, RR, Priority metrics and the live `ps aux` output.)*
-
-2.  **Run Memory Management Simulation:**
+    (Output includes FCFS, SJF, RR, Priority metrics and the live `ps aux` output.)
+* **Run Memory Management Simulation:**
     ```bash
     python3 Memory_Management.py
     ```
-    *(Output includes First-Fit, Best-Fit, Worst-Fit, Next-Fit allocation tables and the live `free -h` output.)*
-
+    (Output includes First-Fit, Best-Fit, Worst-Fit, Next-Fit allocation tables and the live `free -h` output.)
 ---
 
-## 📊 Results and Comparison
+## 📞 Contact and Contributions
 
-[cite_start]The final project requires visual outputs and a critical comparison[cite: 20]:
-
-* [cite_start]**Process Scheduling:** Tabular outputs of waiting/turnaround times and **Gantt Charts** must be generated[cite: 21, 22].
-* [cite_start]**Memory Management:** Tabular outputs and **Memory Allocation Diagrams** must be generated[cite: 22].
-
-[cite_start]Screenshots of the Python output running alongside the relevant Linux command output are a required deliverable[cite: 23].
-
----
+* **Owner:** [Your GitHub Username]
+* **Project Link:** [Your full GitHub URL]
