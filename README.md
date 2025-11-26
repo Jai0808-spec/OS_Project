@@ -72,8 +72,8 @@ Run either simulation file directly using Python 3.
 
 ##  Contact and Contributions
 
-* **Jai Lodha*
-* **Gurpreetsingh Sangari*
-* **Aaryaveer Katoch*
-* **Eashaan Marwah*
-* **Yuvaraj Guliani*
+* *Jai Lodha*
+* *Gurpreetsingh Sangari*
+* *Aaryaveer Katoch*
+* *Eashaan Marwah*
+* *Yuvaraj Guliani*
