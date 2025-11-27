@@ -1,5 +1,5 @@
 # CLOUD IMPLEMENTATION.md
-## AWS EC2 Setup Guide for OS Scheduling Project
+## AWS EC2 Setup Guide for OS: Process Scheduling and Memory Management Project
 
 This document explains how to:
 
