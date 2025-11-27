@@ -8,7 +8,8 @@ This document explains how to:
 - Upload project files  
 - Install Python & dependencies  
 - Run the scheduling simulator  
-- Download Gantt charts  
+- Run the Memory Management simulator
+- Fetch Linux processes data  
 
 ---
 
