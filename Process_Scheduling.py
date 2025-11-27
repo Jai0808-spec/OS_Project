@@ -3,19 +3,67 @@ import shlex
 import copy
 from collections import deque
 
+# --- VISUALIZATION FUNCTION ---
+
+def display_gantt_chart(gantt_chart_data, algorithm_name):
+    """
+    Displays a simple text/ASCII Gantt Chart based on execution history.
+    gantt_chart_data is a list of tuples: [(process_name, start_time, end_time), ...]
+    """
+    if not gantt_chart_data:
+        print("Gantt Chart: No processes executed.")
+        return
+
+    # Sort data by start time
+    gantt_chart_data.sort(key=lambda x: x[1])
+
+    chart_line = "|"
+    time_line = "0"
+    
+    # Track the current time for drawing idle time
+    current_time = 0
+
+    for name, start, end in gantt_chart_data:
+        # Check for idle time
+        if start > current_time:
+            idle_duration = start - current_time
+            chart_line += " IDLE " + " " * (idle_duration - 1) + "|"
+            time_line += " " * (len(" IDLE ") + idle_duration - 1)
+            current_time = start
+
+        # Draw the process block
+        duration = end - start
+        block_text = f" {name} "
+        block_padding = duration - len(block_text)
+        
+        # Ensure block_text fits the duration
+        if block_padding < 0:
+            block_text = name[:duration]
+            block_padding = 0
+
+        chart_line += block_text + "=" * block_padding + "|"
+        time_line += "-" * (len(block_text) + block_padding)
+        time_line += str(end)
+        current_time = end
+
+    print(f"\n--- Gantt Chart: {algorithm_name} ---")
+    print(chart_line)
+    print(time_line)
+    print("---------------------------------")
+
+
 # --- SCHEDULING ALGORITHM FUNCTIONS ---
 
 def simulate_fcfs(processes_data):
     """Implements the First-Come, First-Served (FCFS) Scheduling Algorithm."""
     print("### Algorithm: FCFS")
-    
-    # Sort processes by Arrival Time
     processes_data.sort(key=lambda x: x[1]) 
     
     total_waiting_time = 0
     total_turnaround_time = 0
     completion_time = 0
     results = []
+    gantt_chart = []
 
     for name, arrival, burst in processes_data:
         start_time = max(completion_time, arrival)
@@ -26,6 +74,7 @@ def simulate_fcfs(processes_data):
         total_waiting_time += waiting_time
         total_turnaround_time += turnaround_time
         results.append((name, waiting_time, turnaround_time))
+        gantt_chart.append((name, start_time, completion_time))
 
     num_processes = len(processes_data)
     avg_waiting_time = total_waiting_time / num_processes
@@ -38,12 +87,13 @@ def simulate_fcfs(processes_data):
         
     print(f"\n* Average Waiting Time: {avg_waiting_time:.2f} ms")
     print(f"* Average Turnaround Time: {avg_turnaround_time:.2f} ms")
+    display_gantt_chart(gantt_chart, "FCFS")
+
 
 def simulate_sjf(processes_data):
     """Implements the non-preemptive Shortest Job First (SJF) Scheduling Algorithm."""
     print("### Algorithm: SJF (Non-Preemptive)")
-    
-    processes_data.sort(key=lambda x: x[1]) # Sort by Arrival Time initially
+    processes_data.sort(key=lambda x: x[1]) 
     
     current_time = 0
     total_waiting_time = 0
@@ -51,18 +101,17 @@ def simulate_sjf(processes_data):
     completed_processes = 0
     num_processes = len(processes_data)
     
-    # Working list: [Name, Arrival, Burst, is_completed]
-    working_list = [list(p) + [False] for p in processes_data]
+    working_list = [list(p) + [False] for p in processes_data] # [Name, Arrival, Burst, is_completed]
     results = []
+    gantt_chart = []
     
     while completed_processes < num_processes:
-        # Find available jobs
         available_jobs = [p for p in working_list if p[1] <= current_time and p[3] == False]
         
         if not available_jobs:
-            # If CPU is idle, advance time to the next arrival
             if completed_processes < num_processes:
                 next_arrival = min(p[1] for p in working_list if p[3] == False)
+                gantt_chart.append(("IDLE", current_time, next_arrival))
                 current_time = next_arrival
             continue
 
@@ -72,27 +121,24 @@ def simulate_sjf(processes_data):
         
         name, arrival, burst, _ = selected_job
         
-        # Calculate metrics
         start_time = current_time
         completion_time = start_time + burst
         waiting_time = start_time - arrival
         turnaround_time = completion_time - arrival
         
-        # Update state
         current_time = completion_time
         total_waiting_time += waiting_time
         total_turnaround_time += turnaround_time
         
-        # Mark the job as completed
         for p in working_list:
             if p[0] == name and p[3] == False:
                 p[3] = True
                 break
                 
         results.append((name, waiting_time, turnaround_time))
+        gantt_chart.append((name, start_time, completion_time))
         completed_processes += 1
 
-    # Display Metrics
     avg_waiting_time = total_waiting_time / num_processes
     avg_turnaround_time = total_turnaround_time / num_processes
 
@@ -103,26 +149,25 @@ def simulate_sjf(processes_data):
         
     print(f"\n* Average Waiting Time: {avg_waiting_time:.2f} ms")
     print(f"* Average Turnaround Time: {avg_turnaround_time:.2f} ms")
-    
+    display_gantt_chart(gantt_chart, "SJF")
+
 
 def simulate_round_robin(processes_data, quantum=2):
     """Implements the Round Robin Scheduling Algorithm."""
     print(f"### Algorithm: Round Robin (Quantum={quantum}ms)")
     
-    # [Name, Arrival, Remaining Burst, Original Burst]
-    ready_queue = deque()
-    # Copy and augment data: [Name, Arrival, Remaining Burst, Original Burst, Waiting Time, Turnaround Time]
     proc_details = {p[0]: {'arrival': p[1], 'burst': p[2], 'remaining': p[2], 'start_time': -1, 'wait': 0, 'turnaround': 0, 'completed': False} for p in processes_data}
-
-    # Sort processes by arrival time for initial queue loading
     sorted_processes = sorted(processes_data, key=lambda x: x[1])
+    ready_queue = deque()
+    gantt_chart = []
     
     current_time = 0
     process_index = 0
+    last_exec_time = 0
     
     while process_index < len(sorted_processes) or ready_queue:
         
-        # 1. Check for new arrivals and add them to the queue
+        # 1. Check for new arrivals
         while process_index < len(sorted_processes) and sorted_processes[process_index][1] <= current_time:
             ready_queue.append(sorted_processes[process_index][0])
             process_index += 1
@@ -131,16 +176,16 @@ def simulate_round_robin(processes_data, quantum=2):
             current_proc_name = ready_queue.popleft()
             details = proc_details[current_proc_name]
 
-            # Determine the execution time slice
             time_slice = min(quantum, details['remaining'])
             
-            # Update start time if this is the first execution
             if details['start_time'] == -1:
                 details['start_time'] = current_time
             
-            # Execute for time_slice
+            start_of_slice = current_time
             current_time += time_slice
             details['remaining'] -= time_slice
+            
+            gantt_chart.append((current_proc_name, start_of_slice, current_time))
             
             # 2. Add any processes that arrived during this time slice
             while process_index < len(sorted_processes) and sorted_processes[process_index][1] <= current_time:
@@ -149,19 +194,18 @@ def simulate_round_robin(processes_data, quantum=2):
             
             # 3. Check for completion and requeue
             if details['remaining'] == 0:
-                # Completed
                 details['completed'] = True
                 details['turnaround'] = current_time - details['arrival']
                 details['wait'] = details['turnaround'] - details['burst']
             else:
-                # Not completed, add back to the end of the queue
                 ready_queue.append(current_proc_name)
         else:
-            # CPU idle, advance time to the next arrival
+            # CPU idle
             if process_index < len(sorted_processes):
-                current_time = sorted_processes[process_index][1]
+                next_arrival = sorted_processes[process_index][1]
+                gantt_chart.append(("IDLE", current_time, next_arrival))
+                current_time = next_arrival
             else:
-                # Should not happen if all processes are accounted for
                 break 
 
     # Display Metrics
@@ -178,15 +222,107 @@ def simulate_round_robin(processes_data, quantum=2):
         
     print(f"\n* Average Waiting Time: {avg_waiting_time:.2f} ms")
     print(f"* Average Turnaround Time: {avg_turnaround_time:.2f} ms")
-    print("[Placeholder: Insert your Round Robin Gantt Chart visualization here]")
+    display_gantt_chart(gantt_chart, f"Round Robin (Q={quantum})")
+
+
+def simulate_priority_preemptive(processes_data):
+    """
+    Implements Preemptive Priority Scheduling (SRTF-style preemption based on priority).
+    processes_data: [(name, arrival, burst, priority), ...]
+    Lower number = Higher Priority.
+    """
+    print("### Algorithm: Preemptive Priority (SRTF-style)")
+
+    current_time = 0
+    num_processes = len(processes_data)
+    
+    # [Name, Arrival, Burst, Priority, Remaining, Completed, StartTime, FinishTime]
+    details = {p[0]: {'arrival': p[1], 'burst': p[2], 'priority': p[3], 'remaining': p[2], 
+                      'completed': False, 'start_time': -1, 'finish_time': -1} for p in processes_data}
+    
+    gantt_chart = []
+    
+    # Find the total execution time (used to stop the simulation)
+    max_time = max(p[1] for p in processes_data) + sum(p[2] for p in processes_data if p[1] <= max(p[1] for p in processes_data))
+    
+    while current_time < max_time:
+        
+        # 1. Identify all available processes (arrived and not completed)
+        available = [name for name, d in details.items() 
+                     if d['arrival'] <= current_time and not d['completed']]
+        
+        if not available:
+            # CPU is idle
+            current_time += 1
+            continue
+
+        # 2. Select the highest priority process (lower priority number = higher priority)
+        current_process = min(available, key=lambda name: details[name]['priority'])
+        current_details = details[current_process]
+        
+        # 3. Find the next event time (next arrival or end of burst)
+        
+        # A. Time until the current process finishes (if it runs without interruption)
+        time_to_finish = current_details['remaining']
+
+        # B. Time until the next higher-priority process arrives
+        next_event_time = current_time + time_to_finish
+        
+        # Check for future arrivals of processes with higher priority (lower number)
+        for name, d in details.items():
+            if d['arrival'] > current_time and d['priority'] < current_details['priority']:
+                if d['arrival'] < next_event_time:
+                    # Preemption point found
+                    next_event_time = d['arrival']
+        
+        time_slice = next_event_time - current_time
+        
+        # 4. Execute for the calculated time slice
+        if current_details['start_time'] == -1:
+            current_details['start_time'] = current_time
+
+        gantt_chart.append((current_process, current_time, current_time + time_slice))
+        current_time += time_slice
+        current_details['remaining'] -= time_slice
+        
+        # 5. Check for completion
+        if current_details['remaining'] == 0:
+            current_details['completed'] = True
+            current_details['finish_time'] = current_time
+            
+        # Optimization: If all are completed, break early
+        if all(d['completed'] for d in details.values()):
+            break
+
+    # Calculate final metrics
+    total_wait = 0
+    total_turnaround = 0
+    results = []
+
+    for name, d in details.items():
+        turnaround = d['finish_time'] - d['arrival']
+        wait = turnaround - d['burst']
+        total_wait += wait
+        total_turnaround += turnaround
+        results.append((name, wait, turnaround))
+
+    avg_waiting_time = total_wait / num_processes
+    avg_turnaround_time = total_turnaround / num_processes
+
+    print("Process | Waiting Time (ms) | Turnaround Time (ms)")
+    print("-" * 45)
+    for name, wt, tt in results:
+        print(f"{name:<7} | {wt:<17} | {tt}")
+
+    print(f"\n* Average Waiting Time: {avg_waiting_time:.2f} ms")
+    print(f"* Average Turnaround Time: {avg_turnaround_time:.2f} ms")
+    display_gantt_chart(gantt_chart, "Preemptive Priority")
 
 
 # --- LINUX INTEGRATION FUNCTION ---
 
 def get_real_process_snapshot():
-    """
-    Executes the 'ps aux' Linux command to get a snapshot of running processes.
-    """
+    """Executes the 'ps aux' Linux command to get a snapshot of running processes."""
     print("\n## 2. Linux System Output: Real-Time Process Snapshot")
     print("-------------------------------------------------------")
     
@@ -195,7 +331,6 @@ def get_real_process_snapshot():
     
     try:
         result = subprocess.run(args, capture_output=True, text=True, check=True)
-        
         output_lines = result.stdout.splitlines()
         
         print("PID - USER - %CPU - %MEM - START TIME - COMMAND")
@@ -204,7 +339,7 @@ def get_real_process_snapshot():
         print(f"... (Showing first 5 processes of {len(output_lines)-1} total) ...")
         
         print("\n--- Comparison Tip ---")
-        print("Compare your calculated theoretical metrics (e.g., response time for RR) against the real-world complexity of process priority and resource usage shown above.")
+        print("Compare your calculated theoretical metrics against the real-world complexity of process priority and resource usage shown above.")
         
     except Exception as e:
         print(f"Error executing Linux command 'ps aux': {e}")
@@ -215,24 +350,36 @@ def get_real_process_snapshot():
 if __name__ == "__main__":
     print("## Process Scheduling Simulator and Linux Integrator")
     
-    # Test case data: (Process Name, Arrival Time, Burst Time)
-    test_processes = [("P1", 0, 7), ("P2", 2, 4), ("P3", 4, 1), ("P4", 5, 4)]
+    # Test case data: (Process Name, Arrival Time, Burst Time, Priority)
+    # Lower number = Higher Priority (e.g., P1 is highest priority)
+    test_processes = [
+        ("P1", 0, 7, 2), 
+        ("P2", 2, 4, 1), 
+        ("P3", 4, 1, 3), 
+        ("P4", 5, 4, 4)
+    ]
+    test_processes_no_priority = [(p[0], p[1], p[2]) for p in test_processes]
 
     # --- SIMULATION SECTION ---
     print("\n------------------------------------------------------------------")
     print("RUNNING FCFS SIMULATION:")
     print("------------------------------------------------------------------")
-    simulate_fcfs(copy.deepcopy(test_processes))
+    simulate_fcfs(copy.deepcopy(test_processes_no_priority))
 
     print("\n------------------------------------------------------------------")
     print("RUNNING SJF SIMULATION:")
     print("------------------------------------------------------------------")
-    simulate_sjf(copy.deepcopy(test_processes))
+    simulate_sjf(copy.deepcopy(test_processes_no_priority))
     
     print("\n------------------------------------------------------------------")
     print("RUNNING ROUND ROBIN SIMULATION:")
     print("------------------------------------------------------------------")
-    simulate_round_robin(copy.deepcopy(test_processes), quantum=2)
+    simulate_round_robin(copy.deepcopy(test_processes_no_priority), quantum=2)
+
+    print("\n------------------------------------------------------------------")
+    print("RUNNING PREEMPTIVE PRIORITY SIMULATION:")
+    print("------------------------------------------------------------------")
+    simulate_priority_preemptive(copy.deepcopy(test_processes))
     
     # --- LINUX INTEGRATION SECTION ---
     get_real_process_snapshot()
