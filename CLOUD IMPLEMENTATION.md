@@ -115,11 +115,7 @@ This will:
 - Run Memory management algorithms
 - Fetch Memory of processes on linux
 
-Check generated images:
 
-```bash
-ls *.png
-```
 
 # Notes
 
