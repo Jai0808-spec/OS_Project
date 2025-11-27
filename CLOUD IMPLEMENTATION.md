@@ -15,7 +15,7 @@ This document explains how to:
 # 1. Launch EC2 Instance
 
 ### Step 1 — Open AWS Console  
-![Step 1 AWS Console]((https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191436.png))
+![Step 1 AWS Console](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191436.png)
 
 1. Go to **AWS Console → EC2**  
 
