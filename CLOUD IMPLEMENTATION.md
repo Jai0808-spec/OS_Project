@@ -26,12 +26,13 @@ This document explains how to:
 2. After Clicking Launch Instance 
 
 ![Launch Instance](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191640.png)
-![Key Value Pair](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191835.png)
+
 
 
 3. Choose AMI → **Red Hat Linux**  
 4. Instance type → **t3.micro (Free-tier eligible)**  
-5. Create/Select Key Pair → download `.pem` file  
+5. Create/Select Key Pair → download `.pem` file
+![Key Value Pair](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191835.png) 
 6. Configure security group:  
    - Allow **SSH (port 22)** from *My IP*  
 7. Click **Launch Instance** then Click 'Connect'
