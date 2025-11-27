@@ -75,7 +75,8 @@ Run either simulation file directly using Python 3.
 ##  Group Members:
 
 * *Jai Lodha*
+* *Yuvaraj Guliani*
 * *Gurpreetsingh Sangari*
 * *Aaryaveer Katoch*
 * *Eashaan Marwah*
-* *Yuvaraj Guliani*
+  
