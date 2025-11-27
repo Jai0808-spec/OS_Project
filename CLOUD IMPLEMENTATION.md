@@ -121,10 +121,4 @@ This will:
 
 - Use **ec2-user** for Red Hat Linux  
 - Ensure port 22 SSH is allowed  
-- EC2 is headless → charts are saved, not displayed  
-- You can screenshot generated images later for your report  
-
----
-
-# Done!
 
