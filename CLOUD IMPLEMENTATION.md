@@ -66,7 +66,7 @@ If prompted → type **yes**.
 You are now inside the Linux machine.
 
 ---
-![Step 1 AWS Console]([img/IMAGE!7.jpg](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20192118.png))
+![Step 1 AWS Console](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20192118.png)
 
 # 4. Upload Project Files to EC2 (SCP)
 
@@ -110,8 +110,8 @@ This will:
 - Fetch live Linux processes  
 - Run FCFS, SJF, Priority, RR  
 - Produce comparison tables  
-- Generate Gantt charts as `.png` images
-- Run Memory menagement algorithms
+- Generate Gantt charts
+- Run Memory management algorithms
 - Fetch Memory of processes on linux
 
 Check generated images:
@@ -119,20 +119,6 @@ Check generated images:
 ```bash
 ls *.png
 ```
-
----
-
-# 7. Download Gantt Charts to Your Laptop
-
-From your local system:
-
-```powershell
-scp -i "keypair.pem" ec2-user@ec2-44-212-94-109.compute-1.amazonaws.com:/home/ec2-user/*.png .
-```
-
-This downloads all charts into your current folder.
-
----
 
 # Notes
 
