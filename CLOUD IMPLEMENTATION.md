@@ -1,4 +1,4 @@
-# EC2_SETUP.md
+# CLOUD IMPLEMENTATION.md
 ## AWS EC2 Setup Guide for OS Scheduling Project
 
 This document explains how to:
