@@ -41,16 +41,8 @@ This document explains how to:
 
 ---
 
-# 2. Fix Permissions for .pem Key (Windows)
+# 2.  .pem Key (Windows)
 
-Open PowerShell in the folder containing your keypair.pem:
-
-```powershell
-icacls keypair.pem /inheritance:r
-icacls keypair.pem /grant:r "$($env:UserName):(R)"
-```
-
----
 
 ![SSH Instructions](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20192004.png)
 
