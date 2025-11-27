@@ -54,7 +54,8 @@ This document explains how to:
 Use your EC2 public DNS:
 
 ```powershell
-ssh -i "os_group_project.pem" ec2-user@ec2-3-236-17-16.compute-1.amazonaws.com
+ssh -i "os_group_project.pem" ec2-user@<your-public-dns>
+
 ```
 
 If prompted → type **yes**.
@@ -98,7 +99,7 @@ pip3 install pandas matplotlib
 
 ```bash
 python3 Process_Scheduling.py
-python3 Memory_Scheduling.py
+python3 Memory_Management.py
 ```
 
 This will:
