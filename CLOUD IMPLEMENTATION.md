@@ -44,7 +44,7 @@ This document explains how to:
 
 ---
 
-# 2.  .pem Key (Windows)
+# 2.  Connection using SSH Client
 
 
 ![SSH Instructions](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20192004.png)
