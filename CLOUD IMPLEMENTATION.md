@@ -18,26 +18,22 @@ This document explains how to:
 ### Step 1 — Open AWS Console  
 ![Step 1 AWS Console](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191436.png)
 
-1. Go to **AWS Console → EC2**  
-
 ### Step 2 — Open EC2 Dashboard and Click Launch Instance
 ![Step 3 EC2 Dashboard](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191600.png)
 
-2. After Clicking Launch Instance 
+After Clicking Launch Instance 
 
 ![Launch Instance](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191640.png)
 
-
-
-3. Choose AMI → **Red Hat Linux**  
-4. Instance type → **t3.micro (Free-tier eligible)**  
-5. Create/Select Key Pair → download `.pem` file
+Choose AMI → **Red Hat Linux**  
+Instance type → **t3.micro (Free-tier eligible)**  
+Create/Select Key Pair → download `.pem` file
    
 ![Key Value Pair](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191835.png)
 
-6. Configure security group:  
+Configure security group:  
    - Allow **SSH (port 22)** from *My IP*  
-7. Click **Launch Instance** then Click 'Connect'
+Click **Launch Instance** then Click 'Connect'
 
 ![Instance Details](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191931.png)
 
