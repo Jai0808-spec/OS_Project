@@ -106,10 +106,13 @@ python3 Memory_Management.py
 This will:
 
 - Fetch live Linux processes  
-- Run FCFS, SJF, Priority, RR  
+- Run FCFS, SJF, Pre-emptive Priority(SRTF), Round Robin  
 - Produce comparison tables  
 - Generate Gantt charts
+- Generate Turnaround Time and Waiting Time
 - Run Memory management algorithms
+- Produce Memory Allocation Diagrams
+- Generate Internal and External Fragmentation
 - Fetch Memory of processes on linux
 
 
