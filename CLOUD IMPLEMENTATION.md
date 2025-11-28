@@ -9,7 +9,7 @@ This document explains how to:
 - Install Python & dependencies  
 - Run the scheduling simulator  
 - Run the Memory Management simulator
-- Fetch Linux processes data  
+- Fetch live Linux processes data  
 
 ---
 
