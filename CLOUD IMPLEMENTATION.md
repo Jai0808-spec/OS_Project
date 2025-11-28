@@ -23,7 +23,7 @@ This document explains how to:
 
 After Clicking Launch Instance 
 
-![Launch Instance](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20191640.png)
+![Launch Instance](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-28%20215606.png)
 
 Choose AMI → **Red Hat Linux**  
 Instance type → **t3.micro (Free-tier eligible)**  
