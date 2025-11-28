@@ -65,7 +65,7 @@ You are now inside the Linux machine.
 ---
 ![Step 1 AWS Console](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20192118.png)
 
-# 4. Upload Project Files to EC2 (SCP)
+# 4. Upload Github Repository into EC2 Instance
 
 From your laptop:
 
@@ -83,7 +83,7 @@ ls
 ![Upload Files Screenshot](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20192547.png)
 
 
-# 5. Install Python & Required Libraries
+# 5. Installation of Python and Necessary Libraries
 
 Inside the EC2 terminal:
 
@@ -95,7 +95,7 @@ pip3 install pandas matplotlib
 ---
 ![Python Install Screenshot](https://github.com/Jai0808-spec/OS_Project/blob/main/images/Screenshot%202025-11-27%20192820.png)
 
-# 6. Run the Scheduling Simulator
+# 6. Run Both Simulators along the Linux Integration
 
 ```bash
 python3 Process_Scheduling.py
